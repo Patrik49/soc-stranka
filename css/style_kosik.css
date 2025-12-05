@@ -55,31 +55,69 @@ p{
     opacity: 60%;
     
 }
-.pokracovat_wrapper{
-    
+/* --- ÚPRAVA TLAČIDLA POKRAČOVAŤ --- */
+
+.pokracovat_wrapper {
     align-self: flex-end;
-    background-color:#4c4949 ;
-    transition: 0.15s ease-out;
-    border-radius: 0.5rem;
-}
-.pokracovat_txt{
-    transition: 0.15s ease-out;
-}
-.pokracovat_wrapper:hover .pokracovat_txt{
-    color:#808080 ;
+    /* Odstránil som odtiaľto pozadie, aby nebolo tlačidlo "dvojité" */
+    background-color: transparent; 
 }
 
-.pokracovat{
-    border-radius: 1rem;
-    background-color: transparent;
+.pokracovat {
+    /* Pozadie a tvar presunuté sem pre kompaktnejší vzhľad */
+    background-color: #4c4949; 
+    border-radius: 2rem; /* Viac zaoblené = menej "blokovité" */
+    
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    /* Zmenšené medzery a padding */
+    gap: 0.5rem; 
+    padding: 0.8rem 1.5rem; 
+    
     color: white;
-    gap: 0.8rem;
-    padding: 0.75rem;
-    transition: 0.15s ease-out;
+    text-decoration: none; /* Pre istotu, keďže je to <a> tag */
+    transition: 0.2s ease-out;
+    cursor: pointer;
+    border: none; /* Pre prípad použitia <button> */
 }
+
+/* Hover efekt pre celé tlačidlo */
+.pokracovat:hover {
+    background-color: #3d3b3b; /* Jemné stmavnutie pozadia pri nabehnutí */
+}
+
+.pokracovat_txt {
+    font-size: 1.2rem; /* Trochu menšie písmo pre krajší vzhľad */
+    margin: 0;
+    transition: 0.2s ease-out;
+}
+
+/* Zmena farby TEXTU pri hoveri na tlačidlo */
+.pokracovat:hover .pokracovat_txt {
+    color: #808080;
+}
+
+/* --- SVG ŠÍPKA --- */
+
+.sipka {
+    width: 1.2rem;
+    height: 1.2rem;
+    display: block;
+}
+
+.sipka_path {
+    stroke: white;
+    stroke-width: 2;
+    transition: 0.2s ease-out;
+}
+
+
+.pokracovat:hover .sipka_path {
+    stroke: #808080;
+}
+
 
 .txt_btn_wrapper{
     width: 100%;
@@ -103,19 +141,4 @@ button{
     border: 0;
     padding: 0;
     background-color: transparent;
-
-}
-
-
-.pokracovat:hover .sipka_path{
-   color: #808080;
-}
-.sipka{
-    width: 2rem;
-    height: 2rem;
-    
-}
-.sipka_path{
-    stroke: white;
-    transition: 0.15s ease-out;
 }

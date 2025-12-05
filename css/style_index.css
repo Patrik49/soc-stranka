@@ -119,16 +119,37 @@ h2{
   font-size: 1.6rem;
   transition: 0.15s ease-out;
 }
-.pridat{
+/* Tlačidlo Pridať do košíka */
+.pridat {
   height: 2rem;
   width: 100%;
   border-radius: 0 0 1rem 1rem;
   border: 0;
   font-family: "Sansation";
   font-size: 1rem;
+  /* Pridáme transition aj pre background-color a color */
+  transition: 0.2s ease-out; 
+  background-color: #191a19;
+  color: white;
+  cursor: pointer;
 }
-.pridat:hover{
-  background-color: #808080;
+
+/* Krajší a viditeľnejší hover - inverzné farby */
+.pridat:hover {
+  background-color: white;
+  color: black;
+}
+
+/* Efekt stlačenia (zmenšenie) */
+.pridat:active {
+  transform: scale(0.98);
+}
+
+/* Trieda, ktorú pridáme cez JavaScript po kliknutí */
+.pridat.uspech {
+  background-color: #2e8b57; /* SeaGreen - príjemná zelená, ktorá ladí k tmavému dizajnu */
+  color: white;
+  content: "Pridané!"; /* (Poznámka: zmena textu cez CSS content funguje len pri ::after/::before, text zmeníme v JS) */
 }
 
 /* ===== Centered Container for Content ===== */

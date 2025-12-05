@@ -108,7 +108,7 @@ button{
 
 
 .pokracovat:hover .sipka_path{
-   
+   color: #808080;
 }
 .sipka{
     width: 2rem;

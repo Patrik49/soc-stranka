@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     buttons.forEach(button => {
         button.addEventListener('click', function() {
+            
+            // --- FIX START ---
+            // Ak už tlačidlo má triedu 'uspech', nerob nič (ignoruj kliknutie)
+            if (this.classList.contains('uspech')) {
+                return;
+            }
+            // --- FIX END ---
+
             // Odložíme si pôvodný text tlačidla
             const originalText = this.innerText;
 

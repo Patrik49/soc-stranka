@@ -184,6 +184,9 @@ a:hover{
   transition: 0.15s ease-out;
 
 }
+.item_a_tag{
+  width: 100%;
+}
 .hover_wrapper:hover{
   background-color: white;
 }

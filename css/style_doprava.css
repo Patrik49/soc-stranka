@@ -26,7 +26,8 @@
 
 input[type="text"],
 input[type="email"],
-input[type="tel"] {
+input[type="tel"],
+input[type="password"] {
     width: 100%;
     padding: 1rem;
     font-family: "Sansation", sans-serif;

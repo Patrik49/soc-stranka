@@ -1,0 +1,37 @@
+/* Zarovnanie formulára na stred obrazovky */
+.auth_main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding-top: 5rem;
+}
+
+.auth_form {
+    width: 100%;
+    max-width: 400px; /* Užší formulár pre login vyzerá lepšie */
+    align-items: center;
+}
+
+.auth_btn {
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    height: 3rem;
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+.auth_link {
+    margin-top: 1rem;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.auth_link a {
+    color: white;
+    text-decoration: underline;
+}
+
+.auth_link a:hover {
+    color: #808080;
+}

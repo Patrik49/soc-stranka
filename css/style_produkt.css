@@ -1,0 +1,172 @@
+/* Celkový obal pre produkt */
+.produkt_wrapper {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+/* Ľavá strana - obrázok */
+.produkt_img_wrapper {
+    flex: 1.5;
+    background-color: #323131; /* Tmavé pozadie ako v doprave */
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.produkt_img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+}
+
+/* Pravá strana - Info panel */
+.produkt_info {
+    flex: 1;
+    background-color: #323131;
+    border-radius: 1rem;
+    padding: 2rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.produkt_nadpis {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.produkt_cena {
+    font-size: 1.8rem;
+    color: #ccc;
+    font-weight: normal;
+    margin: 0;
+}
+
+.produkt_popis {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+/* --- Výber veľkosti --- */
+.vyber_sekcia {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-weight: bold;
+    margin: 0;
+}
+
+.velkosti_wrapper {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Skryjeme klasické radio buttony */
+.velkost_radio input {
+    display: none;
+}
+
+/* Štýl pre krabičku s číslom */
+.velkost_radio span {
+    display: inline-block;
+    padding: 0.8rem 1.2rem;
+    background-color: #4c4949;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+    user-select: none;
+}
+
+/* Hover efekt */
+.velkost_radio:hover span {
+    background-color: #666;
+}
+
+/* Vybraná veľkosť (checked) */
+.velkost_radio input:checked + span {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
+/* --- Výber farby --- */
+.farby_wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.farba_radio input {
+    display: none;
+}
+
+.farba_kruh {
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent; /* Príprava na orámovanie */
+    transition: 0.2s;
+}
+
+/* Zvýraznenie vybranej farby */
+.farba_radio input:checked + .farba_kruh {
+    border-color: white;
+    transform: scale(1.1);
+}
+
+/* --- Sekcia pridania do košíka --- */
+.akcia_wrapper {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.pocet_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.pocet_input {
+    width: 4rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    background-color: #4c4949;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    text-align: center;
+}
+
+/* Úprava tlačidla aby bolo väčšie v detaile */
+.velke_tlacidlo {
+    height: 3rem;
+    border-radius: 0.5rem; /* V indexe je zaoblené inak, tu chceme klasické tlačidlo */
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Responsivita pre mobily */
+@media (max-width: 768px) {
+    .produkt_wrapper {
+        flex-direction: column;
+    }
+}

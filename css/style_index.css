@@ -1,226 +1,400 @@
 @import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-html{
+
+html {
     font-size: 16px;
+    scroll-behavior: smooth; /* Plynulé scrollovanie pri kliku na sekcie */
 }
 
 body {
-  font-family: "Sansation";
+  font-family: "Sansation", sans-serif;
   background-color: black;
   color: white;
   line-height: 1.6;
 }
-button{
+
+button {
   cursor: pointer;
-  font-family: "Sansation";
+  font-family: "Sansation", sans-serif;
 }
-/* Header****************************************************************************************************/
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: 0.15s ease-out;
+}
+
+a:hover {
+  color: #808080;
+}
+
+/* --- HEADER --- */
 header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  
   background-color: #191a19;
   display: flex;
-  
+  justify-content: space-between; /* Rozostúpenie loga a ikon vpravo */
   align-items: center;
   padding: 1rem 2rem;
   z-index: 1000;
+  height: 80px;
+}
 
+.logo_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
-.header_nav{
-  display:flex;
-  font-size: 1.3rem;
-  gap: 1.5rem;
-  margin: 0 auto;
+
+.logo_text {
+  font-size: 2.5rem;
+  color: white;
+  margin: 0;
+  transition: 0.15s ease-out;
 }
-.logo_wrapper{
+
+.icon {
+  width: 3.2rem;
+  height: 3.2rem;
+  fill: white;
+  transition: 0.15s ease-out;
+}
+
+.logo_wrapper:hover .icon,
+.logo_wrapper:hover .logo_text {
+  fill: #808080;
+  color: #808080;
+}
+
+/* Pravá časť headeru (Login + Košík) */
+.header_login {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 15%;
-}
-.logo_text{
-  font-size: 2.5rem
-}
-.logo{
-  color: white;
-  max-width:3.4rem;
-
+  font-size: 1.3rem;
+  margin-right: 2rem;
+  gap: 1rem;
 }
 
-.icon,
-.cart{
-  fill: white;
-}
-.icon{
-  width: 3.2rem;
-  height: 3.2rem;
-}
-.cart{
+
+
+.cart {
   height: 2.5rem;
   width: 2.5rem;
-}
-
-
-.logo_wrapper:hover .icon,
-.logo_wrapper:hover .logo_text,
-.cart_wrapper:hover .cart{
-  
-  color: #808080;
-  fill: #808080;
-  padding: 0;
-
-}
-
-.logo_wrapper:hover{
-
-}
-.logo_wrapper .icon,
-.logo_wrapper .logo_text,
-.logo_wrapper,
-.cart,
-.pridat{
- transition: 0.15s ease-out;
-}
-
-.header_login{
-  font-size: 1.3rem;
-  justify-content:center;
-  width: 7.5%;
-}
-.cart_wrapper{
-  width: 7.5%;
-}
-
-/* Push content below fixed header */
-main {
-  
-  display: grid;
-  align-items: center;
-  padding: 0;
-  min-height: 100vh;
-  margin: 0 auto;
-  margin-top: 10rem;
-  width: 80%;
-  justify-content: center;
-  grid-template-columns: repeat(3, 1fr);
-}
-.showpic{
-  max-width: 15rem;
-}
-h2{
-  color: white;
-  font-size: 1.6rem;
+  fill: white;
   transition: 0.15s ease-out;
 }
-/* Tlačidlo Pridať do košíka */
-.pridat {
-  height: 2rem;
-  width: 100%;
-  border-radius: 0 0 1rem 1rem;
-  border: 0;
-  font-family: "Sansation";
-  font-size: 1rem;
-  /* Pridáme transition aj pre background-color a color */
-  transition: 0.2s ease-out; 
-  background-color: #191a19;
+
+.cart_wrapper:hover .cart {
+  fill: #808080;
+}
+
+
+/* --- HLAVNÝ LAYOUT (SIDEBAR + OBSAH) --- */
+/* Toto nahrádza starý grid v main */
+
+.main_container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  margin-top: 6rem; /* Aby to nebolo schované pod headerom */
+  align-items: flex-start;
+}
+
+/* --- FILTRAČNÝ PANEL (SIDEBAR) --- */
+.filter_sidebar {
+  flex: 0 0 250px; /* Fixná šírka sidebaru */
+  background-color: #323131;
+  padding: 1.5rem;
+  border-radius: 1rem;
   color: white;
+  position: sticky;
+  top: 7rem; /* Ostane prilepený pod headerom */
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+
+.filter_group {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #4c4949;
+  padding-bottom: 1.5rem;
+}
+
+.filter_group:last-child {
+  border-bottom: none;
+}
+
+.filter_title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+/* Checkboxy v filtri */
+.filter_label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #ccc;
+  transition: 0.2s;
+}
+
+.filter_label:hover {
+  color: white;
+}
+
+.filter_checkbox {
+  accent-color: #808080;
+  transform: scale(1.2);
   cursor: pointer;
 }
 
-/* Krajší a viditeľnejší hover - inverzné farby */
-.pridat:hover {
+/* Mriežka veľkostí v filtri */
+.filter_sizes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.size_box {
+  background-color: #4c4949;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: 0.2s;
+  user-select: none;
+  font-size: 0.9rem;
+}
+
+.size_box:hover, .size_box.active {
   background-color: white;
   color: black;
 }
 
-/* Efekt stlačenia (zmenšenie) */
-.pridat:active {
-  transform: scale(0.98);
+/* --- OBSAH A SEKCIE --- */
+.content_area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem; /* Medzera medzi sekciami Muži/Ženy */
 }
 
-/* Trieda, ktorú pridáme cez JavaScript po kliknutí */
-.pridat.uspech {
-  background-color: #2e8b57; /* SeaGreen - príjemná zelená, ktorá ladí k tmavému dizajnu */
+.category_section {
+  scroll-margin-top: 8rem;
+}
+
+.section_header {
+  font-size: 2.5rem;
   color: white;
-  content: "Pridané!"; /* (Poznámka: zmena textu cez CSS content funguje len pri ::after/::before, text zmeníme v JS) */
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 5px solid white; /* Ozdobná čiara */
 }
 
-/* ===== Centered Container for Content ===== */
-
-
-a{
-  color: inherit;
-  text-decoration: none;
-  
-  transition: 0.15s ease-out;
+/* --- GALÉRIA PRODUKTOV (MRIEŽKA) --- */
+.gallery {
+  display: grid;
+  /* Automatické plnenie, minimálna šírka karty 280px */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
 }
-a:hover{
-  color: #808080;
-}
-.item{
+
+/* --- KARTA PRODUKTU (ITEM) --- */
+.item {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  background-color: gray;
-  margin: 1rem;
+  justify-content: space-between;
+  background-color: #323131; /* Tmavšia šedá namiesto "gray" */
   border-radius: 1rem;
-  transition: 0.15s ease-out;
+  transition: transform 0.2s ease-out;
+  overflow: hidden; /* Aby spodné tlačidlá nepresahovali rohy */
+  position: relative;
 }
-.hover_wrapper{
+
+.item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* Vnútro karty (Obrázok a text) */
+.item_content {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  text-align: center;
+  flex-grow: 1; /* Aby zabralo miesto nad tlačidlami */
+}
+
+.item_content:hover {
+  background-color: #3a3a3a; /* Jemné zosvetlenie pri hoveri na vnútro */
+}
+
+.showpic {
   width: 100%;
-  border-radius: 1rem 1rem 0 0;
-  transition: 0.15s ease-out;
-
+  max-width: 15rem;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
 }
-.item_a_tag{
+
+.item h2 {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  color: white;
+}
+
+.price {
+  color: #ccc;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* --- NOVÉ FAREBNÉ TLAČIDLÁ (Namiesto Pridať do košíka) --- */
+.variant_buttons {
+  display: flex;
   width: 100%;
-}
-.hover_wrapper:hover{
-  background-color: white;
-}
-.hover_wrapper:hover h2{
-  color: black;
+  height: 3rem; /* Výška tlačidiel */
+  margin-top: auto;
 }
 
+.color_btn {
+  flex: 1; /* Rozdelí priestor rovnomerne */
+  border: none;
+  cursor: pointer;
+  font-family: "Sansation", sans-serif;
+  font-weight: bold;
+  color: white; 
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
 
-/* ===== Footer ===== */
-.footer_txt{
+.color_btn:hover {
+  opacity: 0.8;
+}
+
+/* Príklady farieb tlačidiel */
+.btn_black { background-color: #1a1a1a; color: white; }
+.btn_silver { background-color: #c0c0c0; color: black; }
+.btn_orange { background-color: #ff6600; color: white; }
+.btn_blue { background-color: #1e90ff; color: white; }
+.btn_red { background-color: #cc0000; color: white; }
+.btn_white { background-color: white; color: black; }
+
+
+/* --- ADMIN ELEMENTS (Pre budúce použitie) --- */
+.admin_toolbar {
+  width: 100%;
+  margin-bottom: 2rem;
+  background-color: #323131;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #555;
+}
+
+.admin_btn {
+  padding: 0.5rem 1rem;
+  background-color: #4c4949;
+  color: white;
+  border-radius: 0.5rem;
   font-size: 1rem;
 }
-footer {
-  width: 100%;
-  background-color: gray;
-  opacity: 40%;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 10rem;
 
+.admin_btn:hover { background-color: #666; }
+.logout_btn { background-color: #8b0000; }
+.logout_btn:hover { background-color: #ff4444; }
+
+.admin_controls {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
 }
 
-/* ===== Responsive Utilities ===== */
-/* You can add breakpoints for responsive design */
+.control_icon {
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+  border-radius: 50%;
+  padding: 0.4rem;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+.control_icon:hover { transform: scale(1.1); }
+.icon_edit { fill: #1e90ff; }
+.icon_delete { fill: #ff0000; }
 
-@media (max-width: 768px) {
-  /* Example: stack header elements vertically */
-  header {
+.item_add_new {
+  border: 2px dashed #808080;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 300px;
+}
+.item_add_new:hover { background-color: #404040; border-color: white; }
+.add_plus { font-size: 5rem; color: #808080; }
+
+
+/* --- FOOTER --- */
+footer {
+  width: 100%;
+  background-color: #323131;
+  opacity: 0.8;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 5rem;
+}
+
+.footer_txt {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+/* --- RESPONSIVITA --- */
+@media (max-width: 900px) {
+  .main_container {
     flex-direction: column;
-    height: auto;
-    padding: 0;
+    padding: 1rem;
   }
-
-  .container {
-    padding: 0;
+  
+  .filter_sidebar {
+    width: 100%;
+    position: static; /* Na mobile už nebude sticky */
+    margin-bottom: 2rem;
+    max-height: none;
+  }
+  
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  header {
+    padding: 1rem;
   }
 }

@@ -27,4 +27,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         });
     });
+
+    // Funkcionalita pre filter veľkostí na index.html
+    const sizeBoxes = document.querySelectorAll('.size_box');
+    
+    sizeBoxes.forEach(box => {
+        box.addEventListener('click', () => {
+            // Najprv odstránime triedu 'active' zo všetkých
+            sizeBoxes.forEach(innerBox => {
+                innerBox.classList.remove('active');
+            });
+            // Potom pridáme triedu 'active' iba na kliknutý prvok
+            box.classList.add('active');
+        });
+    });
 });

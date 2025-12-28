@@ -46,60 +46,55 @@ h2{
 p{
     font-size: 2rem;
 }
+/* UPRAVENE - ZMENA DIZAJNU CENY */
 .cena{
-    font-size: 3rem;
-    color:red;
+    font-size: 2.5rem;
+    color: white;
+    font-weight: bold;
 }
 .sneaky{
     font-size: 1rem;
     opacity: 60%;
     
 }
-/* --- ÚPRAVA TLAČIDLA POKRAČOVAŤ --- */
 
 .pokracovat_wrapper {
     align-self: flex-end;
-    /* Odstránil som odtiaľto pozadie, aby nebolo tlačidlo "dvojité" */
     background-color: transparent; 
 }
 
 .pokracovat {
-    /* Pozadie a tvar presunuté sem pre kompaktnejší vzhľad */
     background-color: #4c4949; 
-    border-radius: 2rem; /* Viac zaoblené = menej "blokovité" */
+    border-radius: 2rem; 
     
     display: flex;
     align-items: center;
     justify-content: center;
     
-    /* Zmenšené medzery a padding */
     gap: 0.5rem; 
     padding: 0.8rem 1.5rem; 
     
     color: white;
-    text-decoration: none; /* Pre istotu, keďže je to <a> tag */
+    text-decoration: none; 
     transition: 0.2s ease-out;
     cursor: pointer;
-    border: none; /* Pre prípad použitia <button> */
+    border: none; 
 }
 
-/* Hover efekt pre celé tlačidlo */
 .pokracovat:hover {
-    background-color: #3d3b3b; /* Jemné stmavnutie pozadia pri nabehnutí */
+    background-color: #3d3b3b; 
 }
 
 .pokracovat_txt {
-    font-size: 1.2rem; /* Trochu menšie písmo pre krajší vzhľad */
+    font-size: 1.2rem; 
     margin: 0;
     transition: 0.2s ease-out;
 }
 
-/* Zmena farby TEXTU pri hoveri na tlačidlo */
 .pokracovat:hover .pokracovat_txt {
     color: #808080;
 }
 
-/* --- SVG ŠÍPKA --- */
 
 .sipka {
     width: 1.2rem;

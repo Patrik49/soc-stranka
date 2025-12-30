@@ -34,3 +34,4 @@ This guide will walk you through setting up your PHP website with a MariaDB data
 2.  **Access your site:** Open your web browser and navigate to `http://localhost/soc-stranka/`.
 
 Your website should now be running and connected to the database.
+s

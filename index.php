@@ -1,6 +1,6 @@
 <?php
-// Initialize the session
 session_start();
+require_once "config.php";
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -21,7 +21,7 @@ session_start();
         <div class="header_login">
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                 <a href="logout.php">Odhlásiť sa</a>
-                <span>Vitaj, <?php echo $_SESSION["username"]; ?></span>
+                <span>Vitaj, <?php echo htmlspecialchars($_SESSION["username"]); ?></span>
             <?php else: ?>
                 <a href="login.php">Prihlásiť sa</a>
                 <a href="register.php">Registrovať sa</a>
@@ -69,9 +69,6 @@ session_start();
                 <h2 class="section_header">Všetky produkty</h2>
                 <div class="gallery">
                     <?php
-                    // Include config file
-                    require_once "config.php";
-                    
                     // Attempt to select products from database
                     $sql = "SELECT * FROM products";
                     if($result = mysqli_query($link, $sql)){

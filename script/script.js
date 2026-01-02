@@ -5,12 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     buttons.forEach(button => {
         button.addEventListener('click', function() {
             
-            // --- FIX START ---
             // Ak už tlačidlo má triedu 'uspech', nerob nič (ignoruj kliknutie)
             if (this.classList.contains('uspech')) {
                 return;
             }
-            // --- FIX END ---
 
             // Odložíme si pôvodný text tlačidla
             const originalText = this.innerText;
@@ -28,17 +26,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Funkcionalita pre filter veľkostí na index.html
-    const sizeBoxes = document.querySelectorAll('.size_box');
-    
-    sizeBoxes.forEach(box => {
-        box.addEventListener('click', () => {
-            // Najprv odstránime triedu 'active' zo všetkých
-            sizeBoxes.forEach(innerBox => {
-                innerBox.classList.remove('active');
-            });
-            // Potom pridáme triedu 'active' iba na kliknutý prvok
-            box.classList.add('active');
+    // --- New Filter Logic ---
+    const filterForm = document.querySelector('.filter_sidebar form');
+    const gallery = document.querySelector('.gallery');
+
+    if (filterForm) {
+        filterForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload
+
+            const formData = new FormData(this);
+            const params = new URLSearchParams(formData);
+
+            fetch('filter_products.php?' + params.toString())
+                .then(response => response.text())
+                .then(html => {
+                    gallery.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error fetching filtered products:', error);
+                    gallery.innerHTML = '<p>Chyba pri načítaní produktov.</p>';
+                });
         });
-    });
+    }
 });

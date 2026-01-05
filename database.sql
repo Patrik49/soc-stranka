@@ -3,6 +3,7 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -12,6 +13,9 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `description` text,
   `image_url` varchar(255),
+  `category` varchar(50) DEFAULT NULL,
+  `color` varchar(50) DEFAULT NULL,
+  `size` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

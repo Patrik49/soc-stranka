@@ -25,10 +25,11 @@ main {
     width: 100%;
 }
 .kosikpic{
-    max-width:50%;
+    width: 15rem;
+    height: 15rem;
+    object-fit: cover;
     background-color: #4c4949;
     border-radius: 1rem;
-    max-height: 20rem;
     
 }
 .about_kosik{

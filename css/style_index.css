@@ -88,9 +88,11 @@ header {
   fill: white;
   transition: 0.15s ease-out;
 }
-
-.cart_wrapper:hover .cart {
+.cart_area:hover .cart{
   fill: #808080;
+}
+.cart:hover {
+  
 }
 
 .main_container {
@@ -145,6 +147,24 @@ header {
 
 .filter_label:hover {
   color: white;
+}
+
+.filter_sidebar .filter_button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #4c4949;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.filter_sidebar .filter_button:hover {
+  background-color: #666;
 }
 
 .filter_checkbox {
@@ -232,8 +252,8 @@ header {
 .showpic {
   width: 100%;
   max-width: 15rem;
-  height: auto;
-  object-fit: contain;
+  height: 15rem;
+  object-fit: cover;
   margin-bottom: 1rem;
   filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
 }

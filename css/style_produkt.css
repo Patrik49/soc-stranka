@@ -23,8 +23,8 @@
 .produkt_img {
     width: 100%;
     max-width: 500px;
-    height: auto;
-    object-fit: contain;
+    height: 500px;
+    object-fit: cover;
     filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
 }
 

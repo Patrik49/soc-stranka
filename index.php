@@ -3,9 +3,9 @@ session_start();
 require_once "config.php";
 
 // These are still needed for the form to remember the state, but they can be empty.
-$selected_categories = [];
-$selected_sizes = [];
-$selected_colors = [];
+$selected_categories = isset($_GET['category']) ? $_GET['category'] : [];
+$selected_sizes = isset($_GET['size']) ? $_GET['size'] : [];
+$selected_colors = isset($_GET['color']) ? $_GET['color'] : [];
 
 ?>
 <!DOCTYPE html>
@@ -32,13 +32,13 @@ $selected_colors = [];
                 <a href="login.php">Prihlásiť sa</a>
                 <a href="register.php">Registrovať sa</a>
             <?php endif; ?>
-            <a href="kosik.php"><svg class="cart" viewBox="0 -0.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>shopping_cart_round [#1137]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g class="cart" id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g class="cart" id="Dribbble-Light-Preview" transform="translate(-140.000000, -3120.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M98.477,2976.95566 L89.541,2976.95566 C89.052,2976.95566 88.635,2976.59484 88.555,2976.10113 L87.361,2968.77831 L100.819,2968.77831 L99.46,2976.12362 C99.37,2976.60608 98.958,2976.95566 98.477,2976.95566 L98.477,2976.95566 Z M101,2966.73398 L97.473,2960.51101 C97.198,2960.02651 96.592,2959.85887 96.116,2960.1369 L96.116,2960.1369 C95.635,2960.41697 95.47,2961.04356 95.747,2961.53216 L98.69,2966.73398 L89.309,2966.73398 L92.257,2961.53625 C92.532,2961.0497 92.371,2960.42822 91.897,2960.14405 L91.888,2960.13894 C91.411,2959.85478 90.798,2960.02037 90.522,2960.50897 L87,2966.73398 L85,2966.73398 C84.447,2966.73398 84,2967.19191 84,2967.75614 C84,2968.32038 84.447,2968.77831 85,2968.77831 L85.333,2968.77831 L86.721,2977.29196 C86.882,2978.27733 87.716,2979 88.694,2979 L99.305,2979 C100.283,2979 101.118,2978.27733 101.278,2977.29196 L102.666,2968.77831 L103,2968.77831 C103.552,2968.77831 104,2968.32038 104,2967.75614 C104,2967.19191 103.552,2966.73398 L103,2966.73398 L101,2966.73398 Z" id="shopping_cart_round-[#1137]"> </path> </g> </g> </g> </g></svg></a>
+            <a href="kosik.php" class="cart_area"><svg class="cart" viewBox="0 -0.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>shopping_cart_round [#1137]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g class="cart" id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g class="cart" id="Dribbble-Light-Preview" transform="translate(-140.000000, -3120.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M98.477,2976.95566 L89.541,2976.95566 C89.052,2976.95566 88.635,2976.59484 88.555,2976.10113 L87.361,2968.77831 L100.819,2968.77831 L99.46,2976.12362 C99.37,2976.60608 98.958,2976.95566 98.477,2976.95566 L98.477,2976.95566 Z M101,2966.73398 L97.473,2960.51101 C97.198,2960.02651 96.592,2959.85887 96.116,2960.1369 L96.116,2960.1369 C95.635,2960.41697 95.47,2961.04356 95.747,2961.53216 L98.69,2966.73398 L89.309,2966.73398 L92.257,2961.53625 C92.532,2961.0497 92.371,2960.42822 91.897,2960.14405 L91.888,2960.13894 C91.411,2959.85478 90.798,2960.02037 90.522,2960.50897 L87,2966.73398 L85,2966.73398 C84.447,2966.73398 84,2967.19191 84,2967.75614 C84,2968.32038 84.447,2968.77831 85,2968.77831 L85.333,2968.77831 L86.721,2977.29196 C86.882,2978.27733 87.716,2979 88.694,2979 L99.305,2979 C100.283,2979 101.118,2978.27733 101.278,2977.29196 L102.666,2968.77831 L103,2968.77831 C103.552,2968.77831 104,2968.32038 104,2967.75614 C104,2967.19191 103.552,2966.73398 L103,2966.73398 L101,2966.73398 Z" id="shopping_cart_round-[#1137]"> </path> </g> </g> </g> </g></svg></a>
         </div>
     </header>
 
     <div class="main_container">
         <aside class="filter_sidebar">
-            <form action="filter_products.php" method="GET">
+            <form action="index.php" method="GET">
                 <div class="filter_group">
                     <p class="filter_title">Kategória</p>
                     <?php 
@@ -81,9 +81,45 @@ $selected_colors = [];
                 <h2 class="section_header">Všetky produkty</h2>
                 <div class="gallery">
                     <?php
-                    // Initial load of all products
+                    // Build the query dynamically based on filters
+                    $where_clauses = [];
+                    $params = [];
+                    $param_types = '';
+
+                    if (!empty($selected_categories)) {
+                        $cat_placeholders = implode(',', array_fill(0, count($selected_categories), '?'));
+                        $where_clauses[] = "category IN ($cat_placeholders)";
+                        $param_types .= str_repeat('s', count($selected_categories));
+                        $params = array_merge($params, $selected_categories);
+                    }
+                    if (!empty($selected_sizes)) {
+                        $size_conditions = [];
+                        foreach ($selected_sizes as $size) {
+                            $size_conditions[] = "FIND_IN_SET(?, size)";
+                            $param_types .= 's';
+                            $params[] = $size;
+                        }
+                        $where_clauses[] = "(" . implode(' OR ', $size_conditions) . ")";
+                    }
+                    if (!empty($selected_colors)) {
+                        $col_placeholders = implode(',', array_fill(0, count($selected_colors), '?'));
+                        $where_clauses[] = "color IN ($col_placeholders)";
+                        $param_types .= str_repeat('s', count($selected_colors));
+                        $params = array_merge($params, $selected_colors);
+                    }
+
                     $sql = "SELECT * FROM products";
-                    if($result = mysqli_query($link, $sql)){
+                    if (!empty($where_clauses)) {
+                        $sql .= " WHERE " . implode(' AND ', $where_clauses);
+                    }
+
+                    if($stmt = mysqli_prepare($link, $sql)){
+                        if (!empty($params)) {
+                            mysqli_stmt_bind_param($stmt, $param_types, ...$params);
+                        }
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+
                         if(mysqli_num_rows($result) > 0){
                             while($row = mysqli_fetch_array($result)){
                                 echo '<div class="item">';
@@ -94,12 +130,10 @@ $selected_colors = [];
                                 echo '</a>';
                                 echo '</div>';
                             }
-                            mysqli_free_result($result);
-                        } else{
-                            echo "<p>Nenašli sa žiadne produkty.</p>";
+                        } else {
+                            echo "<p>Nenašli sa žiadne produkty zodpovedajúce vášmu výberu.</p>";
                         }
-                    } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        mysqli_stmt_close($stmt);
                     }
                     mysqli_close($link);
                     ?>

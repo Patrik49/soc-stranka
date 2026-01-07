@@ -7,6 +7,9 @@
     border-radius: 8px;
     color: white;
 }
+.admin-container h2{
+    margin-bottom: 2rem;
+}
 
 .admin-container h1, .admin-container h2 {
     color: white;
@@ -99,4 +102,62 @@
     color: #ff6b6b;
     font-size: 0.9rem;
     margin-top: 5px;
+}
+
+/* View Orders Page */
+.admin-main {
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+
+.admin-main h2 {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 5px solid white;
+}
+
+.order {
+    background-color: #323131;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    border: 1px solid #4c4949;
+}
+
+.order-header {
+    background-color: #4c4949;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    color: white;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+.order-items table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-items th,
+.order-items td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid #4c4949;
+}
+
+.order-items th {
+    background-color: #3d3b3b;
+    color: white;
+    font-size: 1rem;
+}
+
+.order-items td {
+    color: #ccc;
+}
+
+.order-items tbody tr:last-child td {
+    border-bottom: none;
 }

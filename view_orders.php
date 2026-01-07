@@ -47,14 +47,7 @@ mysqli_close($link);
     <meta charset="UTF-8">
     <title>View Orders</title>
     <link rel="stylesheet" href="css/style_index.css">
-    <link rel="stylesheet" href="css/style_auth.css">
-    <style>
-        .order { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; }
-        .order-header { font-weight: bold; margin-bottom: 10px; }
-        .order-items table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .order-items th, .order-items td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .order-items th { background-color: #f2f2f2; }
-    </style>
+    <link rel="stylesheet" href="css/style_admin.css">
 </head>
 <body>
     <header>
@@ -68,41 +61,43 @@ mysqli_close($link);
             <a href="logout.php" class="nav_item">Odhlásiť sa</a>
         </div>
     </header>
-    <main class="auth_main">
-        <h2>Zobraziť objednávky</h2>
-        <?php if (empty($orders)): ?>
-            <p>Žiadne objednávky neboli nájdené.</p>
-        <?php else: ?>
-            <?php foreach ($orders as $order_id => $order): ?>
-                <div class="order">
-                    <div class="order-header">
-                        Objednávka #<?php echo $order_id; ?> - <?php echo $order['order_date']; ?><br>
-                        Zákazník: <?php echo $order['username']; ?><br>
-                        Celková cena: <?php echo $order['total_price']; ?> €
-                    </div>
-                    <div class="order-items">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Produkt</th>
-                                    <th>Množstvo</th>
-                                    <th>Cena za kus</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($order['items'] as $item): ?>
+    <main class="admin-main">
+        <div class="admin-container">
+            <h2>Zobraziť objednávky</h2>
+            <?php if (empty($orders)): ?>
+                <p>Žiadne objednávky neboli nájdené.</p>
+            <?php else: ?>
+                <?php foreach ($orders as $order_id => $order): ?>
+                    <div class="order">
+                        <div class="order-header">
+                            Objednávka #<?php echo $order_id; ?> - <?php echo $order['order_date']; ?><br>
+                            Zákazník: <?php echo $order['username']; ?><br>
+                            Celková cena: <?php echo $order['total_price']; ?> €
+                        </div>
+                        <div class="order-items">
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td><?php echo $item['product_name']; ?></td>
-                                        <td><?php echo $item['quantity']; ?></td>
-                                        <td><?php echo $item['product_price']; ?> €</td>
+                                        <th>Produkt</th>
+                                        <th>Množstvo</th>
+                                        <th>Cena za kus</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($order['items'] as $item): ?>
+                                        <tr>
+                                            <td><?php echo $item['product_name']; ?></td>
+                                            <td><?php echo $item['quantity']; ?></td>
+                                            <td><?php echo $item['product_price']; ?> €</td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </main>
 
     <footer>

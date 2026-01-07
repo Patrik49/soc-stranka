@@ -10,6 +10,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 $order_placed_message = "";
+$order_id_for_display = null;
 
 // Fetch cart items for the user to calculate total price
 $cart_items = [];
@@ -39,6 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['place_order'])){
             mysqli_stmt_bind_param($stmt_order, "id", $_SESSION['id'], $total_price);
             if(mysqli_stmt_execute($stmt_order)){
                 $order_id = mysqli_insert_id($link);
+                $order_id_for_display = $order_id;
 
                 // Insert into order_items table
                 $sql_items = "INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)";
@@ -57,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['place_order'])){
                         mysqli_stmt_close($stmt_clear);
                     }
                     
-                    $order_placed_message = "Vaša objednávka bola úspešne odoslaná. Číslo objednávky: " . $order_id;
+                    $order_placed_message = "success";
                 }
             }
             mysqli_stmt_close($stmt_order);
@@ -96,11 +98,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['place_order'])){
     </header>
 
     <main>
-        <h1 class="kosik_text">Platba a doprava</h1>
-        
-        <?php if(!empty($order_placed_message)): ?>
-            <div class="alert alert-success"><?php echo $order_placed_message; ?></div>
+        <?php if($order_placed_message == 'success'): ?>
+            <div class="order-success-container">
+                <h2>Objednávka úspešne odoslaná!</h2>
+                <p>Číslo vašej objednávky je:</p>
+                <p class="order-number">#<?php echo $order_id_for_display; ?></p>
+                <a href="index.php" class="btn-continue-shopping">Pokračovať v nákupe</a>
+            </div>
         <?php else: ?>
+            <h1 class="kosik_text">Platba a doprava</h1>
+            
+            <?php if(!empty($order_placed_message)): ?>
+                <div class="alert alert-danger" style="color: red; text-align: center; margin-bottom: 1rem;"><?php echo $order_placed_message; ?></div>
+            <?php endif; ?>
+
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form_wrapper">
                 <div class="sekcia_formulara">
                     <h2>Doručovacie údaje</h2>

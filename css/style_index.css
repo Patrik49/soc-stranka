@@ -26,6 +26,10 @@ main,
   flex: 1;
 }
 
+body > main {
+    padding-top: 100px;
+}
+
 button {
   cursor: pointer;
   font-family: "Sansation", sans-serif;
@@ -367,7 +371,6 @@ footer {
   opacity: 0.8;
   text-align: center;
   padding: 2rem;
-  margin-top: 5rem;
 }
 
 .footer_txt {

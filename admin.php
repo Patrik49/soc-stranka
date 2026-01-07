@@ -25,7 +25,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || !isset($_S
             </a>
             <a href="index.php" class="logo_text">Footshop</a>
         </div>
-        <div class="header_nav">
+        <div class="header_login">
+            <a href="index.php" class="nav_item">Hlavná stránka</a>
             <a href="logout.php" class="nav_item">Odhlásiť sa</a>
         </div>
     </header>

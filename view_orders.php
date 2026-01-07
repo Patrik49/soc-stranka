@@ -56,7 +56,7 @@ mysqli_close($link);
             </a>
             <a href="index.php" class="logo_text">Footshop</a>
         </div>
-        <div class="header_nav">
+        <div class="header_login">
             <a href="admin.php" class="nav_item">Admin Dashboard</a>
             <a href="logout.php" class="nav_item">Odhlásiť sa</a>
         </div>

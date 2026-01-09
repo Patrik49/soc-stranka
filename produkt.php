@@ -92,7 +92,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])){
     <main>
         <?php if(!empty($add_to_cart_msg)) echo '<div class="alert alert-success">' . $add_to_cart_msg . '</div>'; ?>
         
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo trim($_GET["id"]); ?>" method="post">
         <?php
         // Check if product id is provided
         if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
@@ -117,68 +116,111 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])){
                         $price = $row["price"];
                         $description = $row["description"];
                         $image_url = $row["image_url"];
+                        $category = isset($row["category"]) ? $row["category"] : 'Tenisky'; // Default if null
                         
-                        echo '<div class="produkt_wrapper">';
-                        echo '<div class="produkt_img_wrapper">';
-                        echo '<img src="'. $image_url .'" alt="'. $name .'" class="produkt_img">';
-                        echo '</div>';
-                        echo '<div class="produkt_info">';
-                        echo '<h1 class="produkt_nadpis">'. $name .'</h1>';
-                        echo '<h2 class="produkt_cena">'. $price .' €</h2>';
-                        echo '<p class="produkt_popis">'. $description .'</p>';
-                        echo '                <div class="vyber_sekcia">
-                                                    <p class="label">Veľkosť:</p>
-                                                    <div class="velkosti_wrapper">
-                                                        <label class="velkost_radio">
-                                                            <input type="radio" name="velkost" value="38">
-                                                            <span>38</span>
-                                                        </label>
-                                                        <label class="velkost_radio">
-                                                            <input type="radio" name="velkost" value="39">
-                                                            <span>39</span>
-                                                        </label>
-                                                        <label class="velkost_radio">
-                                                            <input type="radio" name="velkost" value="40" checked>
-                                                            <span>40</span>
-                                                        </label>
-                                                        <label class="velkost_radio">
-                                                            <input type="radio" name="velkost" value="41">
-                                                            <span>41</span>
-                                                        </label>
-                                                        <label class="velkost_radio">
-                                                            <input type="radio" name="velkost" value="42">
-                                                            <span>42</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+                        // Break out of PHP to write clean HTML
+                        ?>
+                        
+                        <div class="product_page_container">
+                            <!-- Breadcrumbs -->
+                            <div class="breadcrumbs">
+                                <a href="index.php">Domov</a> / 
+                                <a href="index.php?category[]=<?php echo htmlspecialchars($category); ?>"><?php echo htmlspecialchars($category); ?></a> / 
+                                <span><?php echo htmlspecialchars($name); ?></span>
+                            </div>
 
-                                                <div class="vyber_sekcia">
-                                                    <p class="label">Farba:</p>
-                                                    <div class="farby_wrapper">
-                                                        <label class="farba_radio">
-                                                            <input type="radio" name="farba" value="black" checked>
-                                                            <span class="farba_kruh" style="background-color: #000;"></span>
-                                                        </label>
-                                                        <label class="farba_radio">
-                                                            <input type="radio" name="farba" value="orange">
-                                                            <span class="farba_kruh" style="background-color: #ff6600;"></span>
-                                                        </label>
-                                                        <label class="farba_radio">
-                                                            <input type="radio" name="farba" value="silver">
-                                                            <span class="farba_kruh" style="background-color: #c0c0c0;"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+                            <!-- Main Product Details -->
+                            <div class="product_detail_wrapper">
+                                <!-- Left: Image -->
+                                <div class="detail_img_wrapper">
+                                    <img src="<?php echo htmlspecialchars($image_url); ?>" alt="<?php echo htmlspecialchars($name); ?>" class="detail_img">
+                                </div>
 
-                                                <div class="akcia_wrapper">
-                                                    <div class="pocet_wrapper">
-                                                        <label for="pocet">Ks:</label>
-                                                        <input type="number" name="quantity" id="pocet" value="1" min="1" max="10" class="pocet_input">
-                                                    </div>
-                                                    <button type="submit" name="add_to_cart" class="pridat velke_tlacidlo">Pridať do košíka</button>
-                                                </div>';
-                        echo '</div>';
-                        echo '</div>';
+                                <!-- Right: Info & Form -->
+                                <div class="detail_info">
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo trim($_GET["id"]); ?>" method="post">
+                                        <h1 class="detail_title"><?php echo htmlspecialchars($name); ?></h1>
+                                        <div class="detail_price"><?php echo htmlspecialchars($price); ?> €</div>
+                                        
+                                        <p class="detail_desc"><?php echo htmlspecialchars($description); ?></p>
+
+                                        <!-- Size Selector -->
+                                        <div class="selection_group">
+                                            <span class="selection_label">Vyberte veľkosť</span>
+                                            <div class="size_grid">
+                                                <?php 
+                                                $sizes = [38, 39, 40, 41, 42, 43, 44, 45];
+                                                foreach($sizes as $s): ?>
+                                                    <label class="size_option">
+                                                        <input type="radio" name="velkost" value="<?php echo $s; ?>" <?php echo ($s == 40) ? 'checked' : ''; ?>>
+                                                        <div class="size_box"><?php echo $s; ?></div>
+                                                    </label>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </div>
+
+                                        <!-- Color Selector -->
+                                        <div class="selection_group">
+                                            <span class="selection_label">Vyberte farbu</span>
+                                            <div class="color_grid">
+                                                <label class="color_option">
+                                                    <input type="radio" name="farba" value="black" checked>
+                                                    <span class="color_circle" style="background-color: #111;"></span>
+                                                </label>
+                                                <label class="color_option">
+                                                    <input type="radio" name="farba" value="white">
+                                                    <span class="color_circle" style="background-color: #fff;"></span>
+                                                </label>
+                                                <label class="color_option">
+                                                    <input type="radio" name="farba" value="orange">
+                                                    <span class="color_circle" style="background-color: #ff6600;"></span>
+                                                </label>
+                                                <label class="color_option">
+                                                    <input type="radio" name="farba" value="blue">
+                                                    <span class="color_circle" style="background-color: #1e90ff;"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Action Row -->
+                                        <div class="action_row">
+                                            <div class="qty_wrapper">
+                                                <input type="number" name="quantity" value="1" min="1" max="10" class="qty_input">
+                                            </div>
+                                            <button type="submit" name="add_to_cart" class="add_btn pridat">Pridať do košíka</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Related Products Section -->
+                            <div class="related_section">
+                                <h3 class="related_title">Podobné produkty</h3>
+                                <div class="gallery">
+                                    <?php
+                                    // Fetch 4 related products from the same category, excluding current one
+                                    $related_sql = "SELECT * FROM products WHERE category = ? AND id != ? LIMIT 4";
+                                    if($stmt_rel = mysqli_prepare($link, $related_sql)){
+                                        mysqli_stmt_bind_param($stmt_rel, "si", $category, $param_id);
+                                        mysqli_stmt_execute($stmt_rel);
+                                        $res_rel = mysqli_stmt_get_result($stmt_rel);
+                                        while($rel_row = mysqli_fetch_array($res_rel)){
+                                            echo '<div class="item">';
+                                            echo '<a href="produkt.php?id='. $rel_row['id'] .'" class="item_content">';
+                                            echo '<img class="showpic" src="'. $rel_row['image_url'] .'" alt="'. $rel_row['name'] .'">';
+                                            echo '<h2>'. $rel_row['name'] .'</h2>';
+                                            echo '<p class="price">'. $rel_row['price'] .' €</p>';
+                                            echo '</a>';
+                                            echo '</div>';
+                                        }
+                                        mysqli_stmt_close($stmt_rel);
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
 
                     } else{
                         echo "Product not found.";
@@ -192,7 +234,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])){
             echo "No product ID specified.";
         }
         ?>
-        </form>
     </main>
 
     <footer>

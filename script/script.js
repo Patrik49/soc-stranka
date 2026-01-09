@@ -26,25 +26,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- New Filter Logic ---
+    // --- Enhanced Filter Logic ---
     const filterForm = document.querySelector('.filter_sidebar form');
     const gallery = document.querySelector('.gallery');
+    const filterCheckboxes = document.querySelectorAll('.filter_sidebar input[type="checkbox"]');
+
+    // Auto-submit form on filter change
+    if (filterCheckboxes.length > 0 && filterForm) {
+        filterCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Debounce the submission
+                clearTimeout(window.filterTimeout);
+                window.filterTimeout = setTimeout(() => {
+                    const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+                    filterForm.dispatchEvent(submitEvent);
+                }, 500);
+            });
+        });
+    }
 
     if (filterForm) {
         filterForm.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent page reload
 
+            if (gallery) {
+                gallery.style.opacity = '0.5'; // Visual feedback
+            }
+
             const formData = new FormData(this);
             const params = new URLSearchParams(formData);
+            
+            // Update URL for shareability
+            history.pushState(null, '', 'index.php?' + params.toString());
 
             fetch('filter_products.php?' + params.toString())
                 .then(response => response.text())
                 .then(html => {
-                    gallery.innerHTML = html;
+                    if (gallery) {
+                        gallery.innerHTML = html;
+                        gallery.style.opacity = '1';
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching filtered products:', error);
-                    gallery.innerHTML = '<p>Chyba pri načítaní produktov.</p>';
+                    if (gallery) {
+                        gallery.innerHTML = '<p>Chyba pri načítaní produktov.</p>';
+                        gallery.style.opacity = '1';
+                    }
                 });
         });
     }

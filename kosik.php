@@ -70,34 +70,51 @@ if($stmt = mysqli_prepare($link, $sql)){
     </header>
 
     <main>
-        <h1 class="kosik_text">Váš Košík</h1>
-        <?php if(empty($cart_items)): ?>
-            <p>Váš košík je prázdny.</p>
-        <?php else: ?>
-            <?php foreach($cart_items as $item): ?>
-                <div class="polozka">
-                    <img class="kosikpic" src="<?php echo $item['image_url']; ?>">
-                    <div class="about_kosik">
-                        <div class="txt_btn_wrapper">
-                            <h2><?php echo $item['name']; ?></h2>
-                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <input type="hidden" name="cart_id" value="<?php echo $item['id']; ?>">
-                                <button type="submit" name="remove_from_cart"><svg class="cancel" fill="#000000" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>cancel2</title> <path d="M19.587 16.001l6.096 6.096c0.396 0.396 0.396 1.039 0 1.435l-2.151 2.151c-0.396 0.396-1.038 0.396-1.435 0l-6.097-6.096-6.097 6.096c-0.396 0.396-1.038 0.396-1.434 0l-2.152-2.151c-0.396-0.396-0.396-1.038 0-1.435l6.097-6.096-6.097-6.097c-0.396-0.396-0.396-1.039 0-1.435l2.153-2.151c0.396-0.396 1.038-0.396 1.434 0l6.096 6.097 6.097-6.097c0.396-0.396 1.038-0.396 1.435 0l2.151 2.152c0.396 0.396 0.396 1.038 0 1.435l-6.096 6.096z"></path> </g></svg></button>
-                            </form>
-                        </div>
-                        <p class="cena"><?php echo $item['price']; ?>€</p>
-                        <p>Počet : <?php echo $item['quantity']; ?>ks</p>
-                    </div>
+        <h1 class="page_title">Váš Košík</h1>
+        <div class="cart_container">
+            <?php if(empty($cart_items)): ?>
+                <div class="empty_cart">
+                    <p>Váš košík je prázdny.</p>
+                    <a href="index.php" class="btn_back">Späť do obchodu</a>
                 </div>
-            <?php endforeach; ?>
-            <div class="total_price">
-                Celková suma: <?php echo number_format($total_price, 2); ?>€
-            </div>
-            <div class="pokracovat_wrapper"><a href="doprava.php" class="pokracovat">
-                <p class="pokracovat_txt">Platba a doprava</p>
-                <svg class="sipka" viewBox="9 6 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path class="sipka_path" d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-            </a></div>
-        <?php endif; ?>
+            <?php else: ?>
+                <div class="cart_items_list">
+                    <?php foreach($cart_items as $item): ?>
+                        <div class="cart_item">
+                            <div class="cart_img_wrapper">
+                                <img class="cart_img" src="<?php echo $item['image_url']; ?>" alt="<?php echo $item['name']; ?>">
+                            </div>
+                            <div class="cart_info">
+                                <div class="cart_header_row">
+                                    <h2><?php echo $item['name']; ?></h2>
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <input type="hidden" name="cart_id" value="<?php echo $item['id']; ?>">
+                                        <button type="submit" name="remove_from_cart" class="remove_btn" title="Odstrániť">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="cart_details_row">
+                                    <p class="item_qty">Počet: <span><?php echo $item['quantity']; ?></span></p>
+                                    <p class="item_price"><?php echo $item['price']; ?> €</p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                
+                <div class="cart_summary">
+                    <div class="total_row">
+                        <span>Celková suma</span>
+                        <span class="total_price"><?php echo number_format($total_price, 2); ?> €</span>
+                    </div>
+                    <a href="doprava.php" class="checkout_btn">
+                        Pokračovať k doprave
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            <?php endif; ?>
+        </div>
     </main>
 
     <footer>

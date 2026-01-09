@@ -99,58 +99,64 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['place_order'])){
 
     <main>
         <?php if($order_placed_message == 'success'): ?>
-            <div class="order-success-container">
-                <h2>Objednávka úspešne odoslaná!</h2>
-                <p>Číslo vašej objednávky je:</p>
-                <p class="order-number">#<?php echo $order_id_for_display; ?></p>
-                <a href="index.php" class="btn-continue-shopping">Pokračovať v nákupe</a>
+            <div class="success_container">
+                <div class="success_icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h2 class="success_title">Objednávka prijatá!</h2>
+                <p class="order_number">Číslo objednávky: <br><span>#<?php echo $order_id_for_display; ?></span></p>
+                <p style="color: #888; margin-bottom: 2rem;">Ďakujeme za váš nákup. Potvrdenie vám bolo zaslané na email.</p>
+                <a href="index.php" class="btn_back">Pokračovať v nákupe</a>
             </div>
         <?php else: ?>
-            <h1 class="kosik_text">Platba a doprava</h1>
+            <h1 class="page_title">Doprava a platba</h1>
             
             <?php if(!empty($order_placed_message)): ?>
-                <div class="alert alert-danger" style="color: red; text-align: center; margin-bottom: 1rem;"><?php echo $order_placed_message; ?></div>
+                <div class="alert alert-danger" style="color: #ff4444; text-align: center; margin-bottom: 1rem; background: rgba(255,0,0,0.1); padding: 1rem; border-radius: 0.5rem; border: 1px solid #ff4444;"><?php echo $order_placed_message; ?></div>
             <?php endif; ?>
 
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form_wrapper">
-                <div class="sekcia_formulara">
-                    <h2>Doručovacie údaje</h2>
-                    <div class="input_row">
-                        <input type="text" name="meno" placeholder="Meno" required>
-                        <input type="text" name="priezvisko" placeholder="Priezvisko" required>
+            <div class="checkout_container">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    
+                    <!-- Delivery Details -->
+                    <div class="form_section">
+                        <h2>Doručovacie údaje</h2>
+                        <div class="input_group">
+                            <input type="text" name="meno" class="form_input" placeholder="Meno" required>
+                            <input type="text" name="priezvisko" class="form_input" placeholder="Priezvisko" required>
+                            
+                            <input type="text" name="ulica" class="form_input full_width" placeholder="Ulica a číslo domu" required>
+                            
+                            <input type="text" name="mesto" class="form_input" placeholder="Mesto" required>
+                            <input type="text" name="psc" class="form_input" placeholder="PSČ" required>
+                            
+                            <input type="email" name="email" class="form_input full_width" placeholder="Email" required>
+                            <input type="tel" name="tel" class="form_input full_width" placeholder="Telefónne číslo" required>
+                        </div>
                     </div>
-                    <input type="text" name="ulica" placeholder="Ulica a číslo domu" required>
-                    <div class="input_row">
-                        <input type="text" name="mesto" placeholder="Mesto" required>
-                        <input type="text" name="psc" placeholder="PSČ" required>
+
+                    <!-- Payment Method -->
+                    <div class="form_section">
+                        <h2>Spôsob platby</h2>
+                        <div class="payment_options">
+                            <label class="payment_option">
+                                <input type="radio" name="platba" value="karta" checked>
+                                <span>Platba kartou online</span>
+                            </label>
+                            <label class="payment_option">
+                                <input type="radio" name="platba" value="dobierka">
+                                <span>Dobierka (+1€)</span>
+                            </label>
+                            <label class="payment_option">
+                                <input type="radio" name="platba" value="prevod">
+                                <span>Bankový prevod</span>
+                            </label>
+                        </div>
                     </div>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="tel" name="tel" placeholder="Telefónne číslo" required>
-                </div>
 
-                <div class="sekcia_formulara">
-                    <h2>Spôsob platby</h2>
-                    <label class="moznost_platby">
-                        <input type="radio" name="platba" value="karta" checked>
-                        <span>Platba kartou online</span>
-                    </label>
-                    <label class="moznost_platby">
-                        <input type="radio" name="platba" value="dobierka">
-                        <span>Dobierka (+1€)</span>
-                    </label>
-                    <label class="moznost_platby">
-                        <input type="radio" name="platba" value="prevod">
-                        <span>Bankový prevod</span>
-                    </label>
-                </div>
-
-                <div class="pokracovat_wrapper">
-                    <button type="submit" name="place_order" class="pokracovat">
-                        <p class="pokracovat_txt">Odoslať objednávku</p>
-                        <svg class="sipka" viewBox="9 6 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path class="sipka_path" d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    </button>
-                </div>
-            </form>
+                    <button type="submit" name="place_order" class="submit_btn">Odoslať objednávku</button>
+                </form>
+            </div>
         <?php endif; ?>
     </main>
 

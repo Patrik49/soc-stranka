@@ -1,37 +1,124 @@
-/* Zarovnanie formulára na stred obrazovky */
+/* --- Auth Page Styles (Login/Register) --- */
 .auth_main {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80vh;
-    padding-top: 5rem;
+    min-height: 85vh; /* Full height minus header/footer approx */
+    padding: 2rem;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
 }
 
-.auth_form {
+.auth_card {
+    background-color: #1f1f1f;
+    padding: 3rem 2.5rem;
+    border-radius: 1rem;
     width: 100%;
-    max-width: 400px; /* Užší formulár pre login vyzerá lepšie */
-    align-items: center;
+    max-width: 420px;
+    border: 1px solid #333;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.auth_card h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: white;
+    font-weight: 700;
+}
+
+.form_group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.auth_input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    background-color: #121212;
+    border: 1px solid #444;
+    border-radius: 0.5rem;
+    color: white;
+    font-family: "Sansation", sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.auth_input:focus {
+    border-color: white;
+    background-color: #080808;
+    box-shadow: 0 0 15px rgba(255,255,255,0.05);
+}
+
+.auth_input::placeholder {
+    color: #666;
 }
 
 .auth_btn {
-    margin-top: 1rem;
-    border-radius: 0.5rem;
-    height: 3rem;
-    font-size: 1.2rem;
     width: 100%;
+    padding: 1rem;
+    background-color: white;
+    color: black;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.auth_btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255,255,255,0.2);
+    background-color: #f0f0f0;
 }
 
 .auth_link {
-    margin-top: 1rem;
-    color: #ccc;
+    margin-top: 2rem;
+    color: #888;
     font-size: 0.9rem;
 }
 
 .auth_link a {
     color: white;
-    text-decoration: underline;
+    font-weight: bold;
+    text-decoration: none;
+    position: relative;
 }
 
-.auth_link a:hover {
-    color: #808080;
+.auth_link a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: white;
+    transition: width 0.3s;
+}
+
+.auth_link a:hover::after {
+    width: 100%;
+}
+
+.help-block {
+    color: #ff4444;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.has-error .auth_input {
+    border-color: #ff4444;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }

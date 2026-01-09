@@ -100,7 +100,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footshop - Prihlásenie</title>
     <link rel="stylesheet" href="css/style_index.css">
-    <link rel="stylesheet" href="css/style_doprava.css">
     <link rel="stylesheet" href="css/style_auth.css">
 </head>
 <body>
@@ -113,18 +112,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </header>
 
     <main class="auth_main">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="sekcia_formulara auth_form">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="auth_card">
             <h2>Prihlásenie</h2>
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <input type="text" name="username" placeholder="Meno" required value="<?php echo $username; ?>">
+            <div class="form_group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                <input type="text" name="username" class="auth_input" placeholder="Meno" required value="<?php echo $username; ?>">
                 <span class="help-block"><?php echo $username_err; ?></span>
             </div>
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <input type="password" name="password" placeholder="Heslo" required>
+            <div class="form_group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+                <input type="password" name="password" class="auth_input" placeholder="Heslo" required>
                 <span class="help-block"><?php echo $password_err; ?></span>
             </div>
             
-            <button type="submit" class="pridat auth_btn">Prihlásiť sa</button>
+            <button type="submit" class="auth_btn">Prihlásiť sa</button>
             
             <p class="auth_link">Nemáš účet? <a href="register.php">Zaregistruj sa</a></p>
         </form>

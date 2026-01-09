@@ -30,13 +30,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || !isset($_S
             <a href="logout.php" class="nav_item">Odhlásiť sa</a>
         </div>
     </header>
-    <main>
-        <div class="admin-container">
-            <h1>Vitaj, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Toto je admin panel.</h1>
-            <p>
-                <a href="manage_products.php" class="admin-btn">Spravovať produkty</a>
-                <a href="view_orders.php" class="admin-btn">Zobraziť objednávky</a>
-            </p>
+    <main class="admin_main">
+        <div class="admin_header">
+            <h1 class="admin_title">Admin Dashboard</h1>
+            <span style="color: #888;">Prihlásený ako: <b style="color: white;"><?php echo htmlspecialchars($_SESSION["username"]); ?></b></span>
+        </div>
+
+        <div class="dashboard_grid">
+            <a href="manage_products.php" class="dash_card">
+                <svg class="dash_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                <span class="dash_text">Spravovať produkty</span>
+            </a>
+            <a href="view_orders.php" class="dash_card">
+                <svg class="dash_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span class="dash_text">Zobraziť objednávky</span>
+            </a>
         </div>
     </main>
 

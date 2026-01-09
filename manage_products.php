@@ -51,14 +51,21 @@ mysqli_close($link);
             <a href="logout.php" class="nav_item">Odhlásiť sa</a>
         </div>
     </header>
-    <main>
-        <div class="admin-container">
-            <h2>Spravovať produkty</h2>
-            <p><a href="add_product.php" class="admin-btn">Pridať nový produkt</a></p>
-            <table class="admin-table">
+    <main class="admin_main">
+        <div class="admin_header">
+            <h1 class="admin_title">Produkty</h1>
+            <a href="add_product.php" class="btn_add">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Pridať produkt
+            </a>
+        </div>
+
+        <div class="table_container">
+            <table class="admin_table">
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Obrázok</th>
                         <th>Názov</th>
                         <th>Cena</th>
                         <th>Akcia</th>
@@ -67,12 +74,13 @@ mysqli_close($link);
                 <tbody>
                     <?php foreach($products as $product): ?>
                     <tr>
-                        <td><?php echo $product['id']; ?></td>
-                        <td><?php echo $product['name']; ?></td>
-                        <td><?php echo $product['price']; ?></td>
-                        <td class="action-links">
-                            <a href="edit_product.php?id=<?php echo $product['id']; ?>">Upraviť</a>
-                            <a href="delete_product.php?id=<?php echo $product['id']; ?>" onclick="return confirm('Naozaj chcete odstrániť tento produkt?');">Odstrániť</a>
+                        <td>#<?php echo $product['id']; ?></td>
+                        <td><img src="<?php echo $product['image_url']; ?>" alt="img"></td>
+                        <td><strong><?php echo $product['name']; ?></strong></td>
+                        <td><?php echo $product['price']; ?> €</td>
+                        <td>
+                            <a href="edit_product.php?id=<?php echo $product['id']; ?>" class="action_btn btn_edit">Upraviť</a>
+                            <a href="delete_product.php?id=<?php echo $product['id']; ?>" class="action_btn btn_delete" onclick="return confirm('Naozaj chcete odstrániť tento produkt?');">Zmazať</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

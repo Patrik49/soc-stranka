@@ -95,35 +95,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <a href="logout.php" class="nav_item">Odhlásiť sa</a>
         </div>
     </header>
-    <main>
-        <div class="admin-container">
-            <h2>Pridať produkt</h2>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="admin-form">
+    <main class="admin_main">
+        <div class="admin_header">
+            <h1 class="admin_title">Pridať produkt</h1>
+        </div>
+
+        <div class="admin_form_container">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                    <input type="text" name="name" placeholder="Názov" required value="<?php echo $name; ?>">
+                    <input type="text" name="name" class="auth_input" placeholder="Názov produktu" required value="<?php echo $name; ?>">
                     <span class="help-block"><?php echo $name_err; ?></span>
                 </div>
                 <div class="form-group <?php echo (!empty($price_err)) ? 'has-error' : ''; ?>">
-                    <input type="text" name="price" placeholder="Cena" required value="<?php echo $price; ?>">
+                    <input type="text" name="price" class="auth_input" placeholder="Cena (€)" required value="<?php echo $price; ?>">
                     <span class="help-block"><?php echo $price_err; ?></span>
                 </div>
                 <div class="form-group">
-                    <textarea name="description" placeholder="Popis"><?php echo $description; ?></textarea>
+                    <textarea name="description" class="auth_input admin_textarea" placeholder="Popis produktu"><?php echo $description; ?></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="image_url" placeholder="URL obrázka" value="<?php echo $image_url; ?>">
+                    <input type="text" name="image_url" class="auth_input" placeholder="URL obrázka" value="<?php echo $image_url; ?>">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="category" placeholder="Kategória" value="<?php echo $category; ?>">
+                    <input type="text" name="category" class="auth_input" placeholder="Kategória (napr. Tenisky)" value="<?php echo $category; ?>">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="color" placeholder="Farba" value="<?php echo $color; ?>">
+                    <input type="text" name="color" class="auth_input" placeholder="Farba" value="<?php echo $color; ?>">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="size" placeholder="Veľkosť (oddelené čiarkou)" value="<?php echo $size; ?>">
+                    <input type="text" name="size" class="auth_input" placeholder="Veľkosti (napr. 38,39,40)" value="<?php echo $size; ?>">
                 </div>
-                <button type="submit" class="admin-btn">Pridať produkt</button>
-                <a href="manage_products.php" class="admin-btn">Zrušiť</a>
+                
+                <button type="submit" class="auth_btn">Uložiť produkt</button>
+                <a href="manage_products.php" style="display:block; text-align:center; margin-top:1rem; color:#888;">Zrušiť</a>
             </form>
         </div>
     </main>

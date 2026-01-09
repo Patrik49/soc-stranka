@@ -61,41 +61,46 @@ mysqli_close($link);
             <a href="logout.php" class="nav_item">Odhlásiť sa</a>
         </div>
     </header>
-    <main class="admin-main">
-        <div class="admin-container">
-            <h2>Zobraziť objednávky</h2>
+    <main class="admin_main">
+        <div class="admin_header">
+            <h1 class="admin_title">Objednávky</h1>
+        </div>
+
+        <div class="table_container">
             <?php if (empty($orders)): ?>
-                <p>Žiadne objednávky neboli nájdené.</p>
+                <p style="padding: 2rem; text-align: center; color: #888;">Žiadne objednávky neboli nájdené.</p>
             <?php else: ?>
-                <?php foreach ($orders as $order_id => $order): ?>
-                    <div class="order">
-                        <div class="order-header">
-                            Objednávka #<?php echo $order_id; ?> - <?php echo $order['order_date']; ?><br>
-                            Zákazník: <?php echo $order['username']; ?><br>
-                            Celková cena: <?php echo $order['total_price']; ?> €
-                        </div>
-                        <div class="order-items">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Produkt</th>
-                                        <th>Množstvo</th>
-                                        <th>Cena za kus</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($order['items'] as $item): ?>
-                                        <tr>
-                                            <td><?php echo $item['product_name']; ?></td>
-                                            <td><?php echo $item['quantity']; ?></td>
-                                            <td><?php echo $item['product_price']; ?> €</td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                <table class="admin_table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Dátum</th>
+                            <th>Zákazník</th>
+                            <th>Obsah objednávky</th>
+                            <th>Suma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($orders as $order_id => $order): ?>
+                            <tr>
+                                <td>#<?php echo $order_id; ?></td>
+                                <td><?php echo $order['order_date']; ?></td>
+                                <td><?php echo htmlspecialchars($order['username']); ?></td>
+                                <td>
+                                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: #aaa;">
+                                        <?php foreach ($order['items'] as $item): ?>
+                                            <li>
+                                                <span style="color: white;"><?php echo $item['quantity']; ?>x</span> 
+                                                <?php echo htmlspecialchars($item['product_name']); ?>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </td>
+                                <td><strong><?php echo $order['total_price']; ?> €</strong></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             <?php endif; ?>
         </div>
     </main>

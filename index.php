@@ -46,7 +46,7 @@ $selected_colors = isset($_GET['color']) ? $_GET['color'] : [];
                         $categories = ['Tenisky', 'Zimná obuv', 'Šľapky'];
                         foreach ($categories as $cat) {
                             $checked = in_array($cat, $selected_categories) ? 'checked' : '';
-                            echo "<label class='filter_label'><input type='checkbox' name='category[]' value='$cat' $checked> $cat</label>";
+                            echo "<label class='filter_chip'><input type='checkbox' name='category[]' value='$cat' $checked><span>$cat</span></label>";
                         }
                     ?>
                 </div>
@@ -57,7 +57,7 @@ $selected_colors = isset($_GET['color']) ? $_GET['color'] : [];
                         <?php 
                         for ($i=38; $i <= 45; $i++) {
                             $checked = in_array($i, $selected_sizes) ? 'checked' : '';
-                             echo "<label class='filter_label_size'><input type='checkbox' name='size[]' value='$i' $checked> $i</label>";
+                             echo "<label class='filter_chip'><input type='checkbox' name='size[]' value='$i' $checked><span>$i</span></label>";
                         }
                         ?>
                     </div>
@@ -69,10 +69,15 @@ $selected_colors = isset($_GET['color']) ? $_GET['color'] : [];
                         $colors = ['Čierna', 'Biela', 'Oranžová'];
                         foreach ($colors as $col) {
                             $checked = in_array($col, $selected_colors) ? 'checked' : '';
-                            echo "<label class='filter_label'><input type='checkbox' name='color[]' value='$col' $checked> $col</label>";
+                            echo "<label class='filter_chip'><input type='checkbox' name='color[]' value='$col' $checked><span>$col</span></label>";
                         }
                     ?>
                 </div>
+                
+                <?php if(!empty($selected_categories) || !empty($selected_sizes) || !empty($selected_colors)): ?>
+                    <a href="index.php" class="clear_filters">Vymazať filtre</a>
+                <?php endif; ?>
+
                 <button type="submit" class="filter_button">Filtrovať</button>
             </form>
         </aside>

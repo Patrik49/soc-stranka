@@ -13,7 +13,23 @@ require_once "config.php";
  
 // Define variables and initialize with empty values
 $name = $price = $description = $image_url = $category = $color = $size = "";
-$name_err = $price_err = "";
+$name_err = $price_err = $image_url_err = "";
+
+// Fetch existing categories and colors for suggestions
+$existing_categories = [];
+$existing_colors = [];
+$sql_cat = "SELECT DISTINCT category FROM products WHERE category IS NOT NULL AND category != '' ORDER BY category";
+if($result = mysqli_query($link, $sql_cat)){
+    while($row = mysqli_fetch_array($result)){
+        $existing_categories[] = $row['category'];
+    }
+}
+$sql_col = "SELECT DISTINCT color FROM products WHERE color IS NOT NULL AND color != '' ORDER BY color";
+if($result = mysqli_query($link, $sql_col)){
+    while($row = mysqli_fetch_array($result)){
+        $existing_colors[] = $row['color'];
+    }
+}
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -32,13 +48,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     $description = trim($_POST["description"]);
-    $image_url = trim($_POST["image_url"]);
     $category = trim($_POST["category"]);
     $color = trim($_POST["color"]);
     $size = trim($_POST["size"]);
     
+    // Handle Image Upload vs URL
+    $image_source = $_POST['image_source'] ?? 'url';
+    
+    if ($image_source === 'upload') {
+        // File Upload Logic
+        if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = 'uploads/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            
+            $file_ext = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
+            $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            
+            if (in_array($file_ext, $allowed_ext)) {
+                $new_filename = uniqid('prod_', true) . '.' . $file_ext;
+                $target_path = $upload_dir . $new_filename;
+                
+                if (move_uploaded_file($_FILES['image_file']['tmp_name'], $target_path)) {
+                    $image_url = $target_path;
+                } else {
+                    $image_url_err = "Nepodarilo sa nahrať súbor.";
+                }
+            } else {
+                $image_url_err = "Nesprávny typ súboru. Povolené: jpg, jpeg, png, gif, webp.";
+            }
+        }
+    } else {
+        // URL Logic
+        $image_url = trim($_POST["image_url"]);
+    }
+
     // Check input errors before inserting in database
-    if(empty($name_err) && empty($price_err)){
+    if(empty($name_err) && empty($price_err) && empty($image_url_err)){
         
         // Prepare an insert statement
         $sql = "INSERT INTO products (name, price, description, image_url, category, color, size) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -101,7 +148,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </div>
 
         <div class="admin_form_container">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                 <div class="form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
                     <input type="text" name="name" class="auth_input" placeholder="Názov produktu" required value="<?php echo $name; ?>">
                     <span class="help-block"><?php echo $name_err; ?></span>
@@ -113,14 +160,43 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="form-group">
                     <textarea name="description" class="auth_input admin_textarea" placeholder="Popis produktu"><?php echo $description; ?></textarea>
                 </div>
+                
+                <!-- Image Selection Section -->
                 <div class="form-group">
-                    <input type="text" name="image_url" class="auth_input" placeholder="URL obrázka" value="<?php echo $image_url; ?>">
+                    <label class="input_label">Obrázok produktu</label>
+                    <div class="image_source_toggle">
+                        <label class="toggle_option active" onclick="toggleImageSource('url')">
+                            <input type="radio" name="image_source" value="url" checked> URL Adresa
+                        </label>
+                        <label class="toggle_option" onclick="toggleImageSource('upload')">
+                            <input type="radio" name="image_source" value="upload"> Nahrať súbor
+                        </label>
+                    </div>
+
+                    <div id="url_input_group">
+                        <input type="text" name="image_url" class="auth_input" placeholder="https://example.com/obrazok.jpg" value="<?php echo $image_url; ?>">
+                    </div>
+
+                    <div id="file_input_group" style="display: none;">
+                        <label class="file_upload_box">
+                            <input type="file" name="image_file" accept="image/*" style="display: none;" onchange="document.getElementById('file_name_display').textContent = this.files[0].name">
+                            <span id="file_name_display">Kliknite sem pre výber obrázka</span>
+                        </label>
+                    </div>
+                    <span class="help-block"><?php echo $image_url_err; ?></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="category" list="category_list" class="auth_input" placeholder="Kategória (napr. Tenisky)" value="<?php echo $category; ?>">
+                    <datalist id="category_list">
+                        <?php foreach($existing_categories as $cat) echo "<option value=\"" . htmlspecialchars($cat) . "\">"; ?>
+                    </datalist>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="category" class="auth_input" placeholder="Kategória (napr. Tenisky)" value="<?php echo $category; ?>">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="color" class="auth_input" placeholder="Farba" value="<?php echo $color; ?>">
+                    <input type="text" name="color" list="color_list" class="auth_input" placeholder="Farba" value="<?php echo $color; ?>">
+                    <datalist id="color_list">
+                        <?php foreach($existing_colors as $col) echo "<option value=\"" . htmlspecialchars($col) . "\">"; ?>
+                    </datalist>
                 </div>
                 <div class="form-group">
                     <input type="text" name="size" class="auth_input" placeholder="Veľkosti (napr. 38,39,40)" value="<?php echo $size; ?>">
@@ -156,5 +232,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <p>Dizajn a kód: Patrik Stančo</p>
         </div>
     </footer>
+
+    <script>
+        function toggleImageSource(source) {
+            const urlGroup = document.getElementById('url_input_group');
+            const fileGroup = document.getElementById('file_input_group');
+            const options = document.querySelectorAll('.toggle_option');
+
+            options.forEach(opt => opt.classList.remove('active'));
+            
+            if (source === 'url') {
+                urlGroup.style.display = 'block';
+                fileGroup.style.display = 'none';
+                options[0].classList.add('active');
+            } else {
+                urlGroup.style.display = 'none';
+                fileGroup.style.display = 'block';
+                options[1].classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>

@@ -161,8 +161,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['place_order'])){
     </main>
 
     <footer>
-        <p class="footer_txt">©Footshop 2025</p>
-        <p class="footer_txt">Stránku vytvoril Patrik Stančo</p>
+        <div class="footer_container">
+            <div class="footer_col">
+                <h3>Footshop</h3>
+                <p>Tvoj cieľ pre najnovšie tenisky a streetwear. Kvalita, štýl a originalita na jednom mieste.</p>
+            </div>
+            <div class="footer_col">
+                <h3>Nákup</h3>
+                <ul class="footer_links">
+                    <li><a href="index.php">Domov</a></li>
+                    <li><a href="index.php">Všetky produkty</a></li>
+                    <li><a href="kosik.php">Košík</a></li>
+                </ul>
+            </div>
+            <div class="footer_col">
+                <h3>Kontakt</h3>
+                <p>Email: info@footshop.sk<br>Tel: +421 900 000 000</p>
+                <p>Po-Pi: 9:00 - 17:00</p>
+            </div>
+        </div>
+        <div class="footer_bottom">
+            <p>© 2025 Footshop. Všetky práva vyhradené.</p>
+            <p>Dizajn a kód: Patrik Stančo</p>
+        </div>
     </footer>
     
 </body>

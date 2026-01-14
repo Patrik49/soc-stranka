@@ -136,41 +136,45 @@ header {
 
 .main_container {
   display: flex;
-  flex-direction: column; /* Stack filter on top of content */
-  gap: 1.5rem; /* Space between filter bar and content */
-  max-width: 1400px;
+  flex-direction: row; /* Sidebar layout for desktop */
+  gap: 3rem;
+  max-width: 1800px; /* Increased width to fill screen */
+  width: 95%;
   margin: 0 auto;
   margin-top: 8rem; /* Increased margin to clear fixed header */
   padding: 0 2rem; /* Horizontal padding */
   padding-bottom: 6rem; /* Fix: Added space between cards and footer */
 }
 
-/* Redesign the sidebar into a horizontal filter bar */
+/* Sidebar Filter Styles */
 .filter_sidebar {
-  width: 100%;
-  background-color: #1f1f1f;
-  padding: 1rem 2rem;
-  border-radius: 0.8rem;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  border: 1px solid #333;
+  width: 300px; /* Slightly wider sidebar */
+  flex-shrink: 0;
+  background-color: transparent;
+  padding: 0;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  border: none;
+  box-shadow: none;
 }
 
 .filter_sidebar form {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 2rem;
 }
 
 .filter_group {
+  width: 100%;
   margin-bottom: 0; /* Remove vertical spacing */
   border-bottom: none; /* Remove vertical divider */
   padding-bottom: 0;
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: stretch; /* Make items full width */
+  gap: 0.5rem;
 }
 
 .filter_group:last-child {
@@ -181,16 +185,19 @@ header {
 .filter_title {
   font-size: 1.1rem; /* Slightly smaller title */
   margin-bottom: 0;
-  font-weight: bold;
-  color: #e0e0e0;
+  font-weight: 700;
+  color: white;
   white-space: nowrap;
-  margin-right: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
 }
 
 /* --- New Chip/Pill Filter Style --- */
 .filter_chip {
   cursor: pointer;
   user-select: none;
+  width: 100%; /* Ensure full width */
 }
 
 /* Hide the actual checkbox */
@@ -200,13 +207,15 @@ header {
 
 /* Style the span inside the label */
 .filter_chip span {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background-color: #121212;
+  display: block; /* Block display for uniform width */
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background-color: #1f1f1f;
   border: 1px solid #444;
-  border-radius: 50px;
+  border-radius: 4px;
   color: #ccc;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: all 0.2s ease;
 }
 
@@ -222,7 +231,7 @@ header {
   color: black;
   border-color: white;
   font-weight: bold;
-  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
 }
 
 /* Clear Filters Button */
@@ -232,15 +241,15 @@ header {
   color: #ff4444;
   text-decoration: none;
   font-size: 0.9rem;
-  font-weight: bold;
-  border: 1px solid #ff4444;
-  border-radius: 50px;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  padding: 0;
   transition: all 0.2s ease;
 }
 
 .clear_filters:hover {
-  background-color: #ff4444;
-  color: white;
+  background-color: transparent;
+  border-bottom-color: #ff4444;
 }
 
 /* Hide old button if present */
@@ -260,9 +269,10 @@ header {
 }
 
 .filter_sizes {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Uniform grid for sizes */
   gap: 0.5rem;
+  width: 100%;
 }
 
 .content_area {
@@ -610,14 +620,27 @@ footer {
 @media (max-width: 900px) {
   .main_container {
     flex-direction: column;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
+    gap: 2rem;
   }
   
   .filter_sidebar {
     width: 100%;
     position: static;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     max-height: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 1.5rem;
+  }
+
+  .filter_sidebar form {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .filter_group {
+    width: auto;
   }
   
   .gallery {
@@ -649,4 +672,162 @@ footer {
   background-color: rgba(244, 67, 54, 0.1);
   color: #f44336;
   border: 1px solid #f44336;
+}
+
+/* Tablet and Mobile Styles */
+@media (max-width: 768px) {
+  body > main {
+    padding-top: 80px;
+  }
+
+  header {
+    height: 70px;
+    padding: 0 1.5rem;
+  }
+
+  .logo_text {
+    font-size: 1.4rem;
+  }
+
+  .header_login {
+    gap: 1rem;
+  }
+
+  .header_login span {
+    display: none;
+  }
+
+  .hero_section {
+    height: auto;
+    min-height: 60vh;
+    padding: 4rem 0;
+  }
+
+  .hero_content h1 {
+    font-size: 2.5rem;
+  }
+
+  /* Product Page Responsive */
+  .product_detail_wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .detail_img_wrapper, 
+  .detail_info {
+    width: 100%;
+    padding: 0;
+  }
+
+  .detail_img {
+    max-height: 350px;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  /* Cart Responsive */
+  .cart_item {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .cart_img_wrapper {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .cart_img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .cart_info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cart_header_row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+  }
+
+  .cart_header_row h2 {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .cart_details_row {
+    justify-content: space-between;
+    gap: 0;
+    margin-top: 0.5rem;
+  }
+
+  .item_qty, .item_price {
+    font-size: 0.9rem;
+  }
+
+  .cart_summary {
+    padding: 1.5rem;
+  }
+
+  .checkout_btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Checkout Form */
+  .input_group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form_input {
+    width: 100% !important;
+    margin-right: 0;
+  }
+
+  .payment_options {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo_text {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  .header_login a {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .hero_content h1 {
+    font-size: 2rem;
+  }
+
+  .hero_btn {
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .footer_container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 }

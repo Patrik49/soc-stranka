@@ -3,38 +3,68 @@
 session_start();
 require_once "config.php";
 
-// If the user is not logged in, redirect to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
-
 // Handle remove from cart
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['remove_from_cart'])){
     $cart_id = $_POST['cart_id'];
-    $sql = "DELETE FROM cart WHERE id = ? AND user_id = ?";
-    if($stmt = mysqli_prepare($link, $sql)){
-        mysqli_stmt_bind_param($stmt, "ii", $cart_id, $_SESSION['id']);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
+    
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        $sql = "DELETE FROM cart WHERE id = ? AND user_id = ?";
+        if($stmt = mysqli_prepare($link, $sql)){
+            mysqli_stmt_bind_param($stmt, "ii", $cart_id, $_SESSION['id']);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+    } else {
+        // Guest: remove from session
+        // For guests, cart_id passed from form is the product_id
+        if(isset($_SESSION['cart'][$cart_id])){
+            unset($_SESSION['cart'][$cart_id]);
+        }
     }
 }
 
 // Fetch cart items for the user
 $cart_items = [];
 $total_price = 0;
-$sql = "SELECT c.id, p.name, p.price, c.quantity, p.image_url FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ?";
 
-if($stmt = mysqli_prepare($link, $sql)){
-    mysqli_stmt_bind_param($stmt, "i", $_SESSION['id']);
-    if(mysqli_stmt_execute($stmt)){
-        $result = mysqli_stmt_get_result($stmt);
-        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $cart_items[] = $row;
-            $total_price += $row['price'] * $row['quantity'];
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    $sql = "SELECT c.id, p.name, p.price, c.quantity, p.image_url FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ?";
+
+    if($stmt = mysqli_prepare($link, $sql)){
+        mysqli_stmt_bind_param($stmt, "i", $_SESSION['id']);
+        if(mysqli_stmt_execute($stmt)){
+            $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                $cart_items[] = $row;
+                $total_price += $row['price'] * $row['quantity'];
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
+} else {
+    // Guest cart
+    if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
+        $ids = array_keys($_SESSION['cart']);
+        // Sanitize IDs for SQL IN clause
+        $ids_safe = array_map('intval', $ids);
+        $ids_string = implode(',', $ids_safe);
+        
+        if(!empty($ids_string)){
+            $sql = "SELECT id, name, price, image_url FROM products WHERE id IN ($ids_string)";
+            $result = mysqli_query($link, $sql);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                $p_id = $row['id'];
+                $qty = $_SESSION['cart'][$p_id];
+                
+                $row['quantity'] = $qty;
+                // For guests, we use product ID as the identifier for removal
+                $row['id'] = $p_id; 
+                
+                $cart_items[] = $row;
+                $total_price += $row['price'] * $qty;
+            }
         }
     }
-    mysqli_stmt_close($stmt);
 }
 ?>
 <!DOCTYPE html>

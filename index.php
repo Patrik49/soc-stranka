@@ -43,7 +43,7 @@ $selected_colors = isset($_GET['color']) ? $_GET['color'] : [];
                 <div class="filter_group">
                     <p class="filter_title">Kategória</p>
                     <?php 
-                        $categories = ['Tenisky', 'Zimná obuv', 'Šľapky'];
+                        $categories = ['Tenisky', 'Zimná obuv', 'Šľapky', 'Bežecká obuv', 'Turistická obuv'];
                         foreach ($categories as $cat) {
                             $checked = in_array($cat, $selected_categories) ? 'checked' : '';
                             echo "<label class='filter_chip'><input type='checkbox' name='category[]' value='$cat' $checked><span>$cat</span></label>";
@@ -66,7 +66,7 @@ $selected_colors = isset($_GET['color']) ? $_GET['color'] : [];
                 <div class="filter_group">
                     <p class="filter_title">Farba</p>
                     <?php 
-                        $colors = ['Čierna', 'Biela', 'Oranžová'];
+                        $colors = ['Čierna', 'Biela', 'Červená', 'Modrá', 'Sivá', 'Zelená'];
                         foreach ($colors as $col) {
                             $checked = in_array($col, $selected_colors) ? 'checked' : '';
                             echo "<label class='filter_chip'><input type='checkbox' name='color[]' value='$col' $checked><span>$col</span></label>";

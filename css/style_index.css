@@ -339,11 +339,10 @@ header {
 .showpic {
   width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: contain;
+  object-fit: cover;
   margin-bottom: 1.5rem;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 0;
   border-radius: 0.5rem;
 }
 
@@ -808,9 +807,52 @@ footer {
     letter-spacing: 2px;
   }
 
-  .header_login a {
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
+  /* Compact Header for Mobile */
+  .header_login {
+    gap: 0.5rem;
+  }
+
+  /* Hide original text for links, but exclude the cart icon */
+  .header_login a:not(.cart_area) {
+    font-size: 0 !important;
+    padding: 0.5rem;
+  }
+
+  /* Inject short text using pseudo-elements */
+  .header_login a[href*="login.php"]::before {
+    content: "Login";
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #b0b0b0;
+  }
+
+  .header_login a[href*="register.php"]::before {
+    content: "Reg";
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #b0b0b0;
+  }
+
+  .header_login a[href*="logout.php"]::before {
+    content: "Exit";
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #b0b0b0;
+  }
+
+  .header_login a[href*="admin.php"]::before {
+    content: "Admin";
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #b0b0b0;
+  }
+
+  .header_login a:hover::before {
+    color: white;
   }
 
   .hero_content h1 {
